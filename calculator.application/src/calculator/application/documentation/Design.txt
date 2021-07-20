@@ -1,0 +1,17 @@
+Calculator Use Cases:
+-add x numbers
+-subtract x numbers
+-multiply x numbers
+-divide x numbers
+-any combination of the above
+
+Calculator UI
+-Probably use JFace
+-Can try for standard calculator UI
+-could take in the input as a string, then convert to numbers and functions
+
+
+Structure:
+-My current thought is to start with a Calculator Object. This class will contain the math functions
+-Then have a UI class in the same package. 
+-I think there should only be one package, as I don't foresee there being many required classes. 
