@@ -1,5 +1,7 @@
 package calculator.application;
 
+import javax.swing.JTextField;
+
 public class Calculator {
 
 	public Calculator () {
@@ -45,38 +47,41 @@ public class Calculator {
 	}
 	
 	/**
+	 * clear the screen when instructed to do so by the user
+	 */
+	public void clearScreen(String arg1, String arg2, String arg3, JTextField screen) {
+		arg1 = arg2 = arg3 = "";
+		
+		screen.setText("");
+	}
+	
+	/**
 	 * take in three strings, process, return result
 	 * @param arg1
 	 * @param arg2
 	 * @param arg3
 	 * @return
 	 */
-	public double evaluateArguments(String arg1, String arg2, String arg3) {
-		double result;
+	public double evaluateArguments(String arg1, String arg2, String arg3, JTextField screen) {
+		double result = 0;
 		 
        switch(arg2){
        case "+": 
-    	   this.add(Double.parseDouble(arg1),Double.parseDouble(arg3));
+    	   result = this.add(Double.parseDouble(arg1),Double.parseDouble(arg3));
        break;
        case "-":
-    	   this.subtract(Double.parseDouble(arg1),Double.parseDouble(arg3));
+    	   result = this.subtract(Double.parseDouble(arg1),Double.parseDouble(arg3));
     	   break;
        case "/":
-    	   this.divide(Double.parseDouble(arg1),Double.parseDouble(arg3));
+    	   result = this.divide(Double.parseDouble(arg1),Double.parseDouble(arg3));
     	   break;
        case "*":
-    	   this.multiply(Double.parseDouble(arg1),Double.parseDouble(arg3));
+    	  result = this.multiply(Double.parseDouble(arg1),Double.parseDouble(arg3));
     	   break;
     	  
        }
-        if (arg2.equals("+"))
-        	result = this.add(Double.parseDouble(arg1),Double.parseDouble(arg3));
-        else if (arg2.equals("-"))
-        	result = this.subtract(Double.parseDouble(arg1),Double.parseDouble(arg3));
-        else if (arg2.equals("/"))
-        	result = this.divide(Double.parseDouble(arg1),Double.parseDouble(arg3));
-        else
-        	result = this.multiply(Double.parseDouble(arg1),Double.parseDouble(arg3));
+        
+       screen.setText(arg1 + arg2 + arg3 + "=" + result);
         
         return result;
 	}

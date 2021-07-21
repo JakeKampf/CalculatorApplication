@@ -23,7 +23,7 @@ public class UserInterface extends JFrame implements ActionListener {
 	private static JFrame frame = new JFrame("Calculator"); 
 	private static JTextField screen = new JTextField(16);
 	private JPanel panel = new JPanel();
-	private String arg1, arg2, arg3;
+	private String operand1, operator, operand2;
 	
 	private static JButton[] numberButtons = {new JButton("0"),new JButton("1"),new JButton("2"),new JButton("3"),
 			new JButton("4"),new JButton("5"),new JButton("6"),new JButton("7"),new JButton("8"),new JButton("9")};
@@ -32,7 +32,7 @@ public class UserInterface extends JFrame implements ActionListener {
 			new JButton("*"),new JButton("."),new JButton("C"), new JButton("=")};
 	
 	public UserInterface() {
-		arg1 = arg2 = arg3 = "";
+		operand1 = operator = operand2 = "";
 		assembleParts();
 	}
 	
@@ -59,8 +59,37 @@ public class UserInterface extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
+		String input = arg0.getActionCommand();
+		Calculator calc = new Calculator();
 
-	    }
+		if ((input.charAt(0) >= '0' && input.charAt(0) <= '9') || input.charAt(0) == '.') {
+			// check if they entered an operator
+			if (!operator.equals(""))
+				operand2 = operand2 + input;
+			else
+				operand1 = operand1 + input;
+
+			// set the value of text
+			screen.setText(operand1 + operator + operand2);
+
+		} else if (input.charAt(0) == '=') {
+
+			double result = calc.evaluateArguments(operand1, operator, operand2, screen);
+
+			//store result in operand1 as a string
+			operand1 = Double.toString(result);
+
+			operator = operand2 = "";
+		} else if (input.charAt(0) == 'C') {
+			
+			calc.clearScreen(operand1, operator, operand2, screen);
+			
+		} else {
+			//another case
+			
+		}
+
+	}
 
 	
 }
