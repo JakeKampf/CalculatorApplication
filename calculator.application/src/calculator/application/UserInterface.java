@@ -23,16 +23,14 @@ public class UserInterface extends JFrame implements ActionListener {
 	private static JFrame frame = new JFrame("Calculator"); 
 	private static JTextField screen = new JTextField(16);
 	private JPanel panel = new JPanel();
-	private String operand1, operator, operand2;
+	private String arg1, arg2, arg3;
 	
-	private static JButton[] numberButtons = {new JButton("0"),new JButton("1"),new JButton("2"),new JButton("3"),
-			new JButton("4"),new JButton("5"),new JButton("6"),new JButton("7"),new JButton("8"),new JButton("9")};
-	
-	private static JButton[] functions = {new JButton("+"),new JButton("-"),new JButton("/"),
-			new JButton("*"),new JButton("."),new JButton("C"), new JButton("=")};
+	private static JButton[] buttons = {new JButton("7"),new JButton("8"),new JButton("9"),new JButton("/"),new JButton("4"),
+			new JButton("5"),new JButton("6"),new JButton("*"),new JButton("1"),new JButton("2"),new JButton("3"),new JButton("-"),new JButton("0"),
+			new JButton("."),new JButton("CE"),new JButton("+"), new JButton("=")};
 	
 	public UserInterface() {
-		operand1 = operator = operand2 = "";
+		arg1 = arg2 = arg3 = "";
 		assembleParts();
 	}
 	
@@ -42,18 +40,14 @@ public class UserInterface extends JFrame implements ActionListener {
 	private void assembleParts() {
 		screen.setEditable(false);
 		panel.add(screen);
-		for(int button = 0; button<numberButtons.length; button++) {
-			numberButtons[button].addActionListener(this);
-			panel.add(numberButtons[button]);
+		for(int button = 0; button<buttons.length; button++) {
+			buttons[button].addActionListener(this);
+			panel.add(buttons[button]);
 		}
-		for(int button = 0; button<functions.length; button++) {
-			functions[button].addActionListener(this);
-			panel.add(functions[button]);
-		}
-		
 		frame.add(panel);
-		frame.setSize(400, 450);
-        frame.setVisible(true);		
+		frame.setSize(240, 300);
+        frame.setVisible(true);	
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	@Override
@@ -61,35 +55,61 @@ public class UserInterface extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		String input = arg0.getActionCommand();
 		Calculator calc = new Calculator();
+		char inputFirstChar = input.charAt(0);
+		if ((Character.isDigit(inputFirstChar)) || inputFirstChar == '.') {
+			// check if they entered an arg2
 
-		if ((input.charAt(0) >= '0' && input.charAt(0) <= '9') || input.charAt(0) == '.') {
-			// check if they entered an operator
-			if (!operator.equals(""))
-				operand2 = operand2 + input;
-			else
-				operand1 = operand1 + input;
+			if (!arg2.equals("")) {
+				arg3 += input;
+			}else {
+				if(calc.isCleared()) {
+				arg1 += input;
+				calc.setCleared(false);
+				}
+				else {
+					arg1=input;
+				}
+			}
 
 			// set the value of text
-			screen.setText(operand1 + operator + operand2);
+			screen.setText(arg1 + arg2 + arg3);
 
 		} else if (input.charAt(0) == '=') {
-
-			double result = calc.evaluateArguments(operand1, operator, operand2, screen);
-
-			//store result in operand1 as a string
-			operand1 = Double.toString(result);
-
-			operator = operand2 = "";
-		} else if (input.charAt(0) == 'C') {
 			
-			calc.clearScreen(operand1, operator, operand2, screen);
-			
-		} else {
-			//another case
-			
-		}
+			double result = calc.evaluateArguments(arg1, arg2, arg3, screen);
 
+			//store result in arg1 as a string
+			arg1 = Double.toString(result);
+
+			arg2 = arg3 = "";
+			
+		} else if (inputFirstChar == 'C') {
+			
+			calc.clearScreen(arg1, arg2, arg3, screen);
+			
+		} else { 
+			if (arg2.equals("") || arg3.equals("")){
+            // if there was no operand
+                arg2 = input;
+			}
+		 else {
+                double result = calc.evaluateArguments(arg1,arg2,arg3,screen);
+ 
+                // convert it to string
+                arg1 = Double.toString(result);
+ 
+                // place the operator
+                arg2 = input;
+ 
+                // make the operand blank
+                arg3 = "";
+            }
+			screen.setText(arg1+arg2+arg3);
+        }
+		
 	}
+		
+}
 
 	
-}
+

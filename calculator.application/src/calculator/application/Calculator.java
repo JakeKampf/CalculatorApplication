@@ -3,7 +3,9 @@ package calculator.application;
 import javax.swing.JTextField;
 
 public class Calculator {
-
+	
+	private boolean cleared;
+	
 	public Calculator () {
 		
 	} 
@@ -14,7 +16,6 @@ public class Calculator {
 	 * @return
 	 */
 	public double add(double arg1, double arg2) {
-
 		return arg1+arg2;
 	}
 	
@@ -33,7 +34,6 @@ public class Calculator {
 	 * @return
 	 */
 	public double divide(double arg1, double arg2) {
-
 		return arg1/arg2;
 	}
 	
@@ -51,8 +51,8 @@ public class Calculator {
 	 */
 	public void clearScreen(String arg1, String arg2, String arg3, JTextField screen) {
 		arg1 = arg2 = arg3 = "";
-		
 		screen.setText("");
+		this.setCleared(true);
 	}
 	
 	/**
@@ -64,7 +64,6 @@ public class Calculator {
 	 */
 	public double evaluateArguments(String arg1, String arg2, String arg3, JTextField screen) {
 		double result = 0;
-		 
        switch(arg2){
        case "+": 
     	   result = this.add(Double.parseDouble(arg1),Double.parseDouble(arg3));
@@ -85,6 +84,13 @@ public class Calculator {
         
         return result;
 	}
-	
+
+	public boolean isCleared() {
+		return cleared;
+	}
+
+	public void setCleared(boolean cleared) {
+		this.cleared = cleared;
+	}
 	
 }
