@@ -82,6 +82,8 @@ public class UserInterface extends JFrame implements ActionListener {
 
 			arg2 = arg3 = "";
 			
+			calc.setCleared(true);
+			
 		} else if (inputFirstChar == 'C') {
 			
 			calc.clearScreen(arg1, arg2, arg3, screen);
