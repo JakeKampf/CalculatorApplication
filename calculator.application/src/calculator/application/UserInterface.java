@@ -19,7 +19,7 @@ public class UserInterface extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	
+	private static Calculator calc = new Calculator();
 	private static JFrame frame = new JFrame("Calculator"); 
 	private static JTextField screen = new JTextField(16);
 	private JPanel panel = new JPanel();
@@ -53,8 +53,7 @@ public class UserInterface extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		String input = arg0.getActionCommand();
-		Calculator calc = new Calculator();
+		String input = arg0.getActionCommand();		
 		char inputFirstChar = input.charAt(0);
 		if ((Character.isDigit(inputFirstChar)) || inputFirstChar == '.') {
 			// check if they entered an arg2
@@ -63,11 +62,11 @@ public class UserInterface extends JFrame implements ActionListener {
 				arg3 += input;
 			}else {
 				if(calc.isCleared()) {
-				arg1 += input;
+					arg1=input;
 				calc.setCleared(false);
 				}
-				else {
-					arg1=input;
+				else {					
+					arg1 += input;
 				}
 			}
 
